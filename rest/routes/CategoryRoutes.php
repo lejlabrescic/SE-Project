@@ -1,5 +1,4 @@
 <?php
-
 Flight::route("GET /categories", function(){
     Flight::json(Flight::category_service()->get_all());
 });

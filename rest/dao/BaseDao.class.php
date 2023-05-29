@@ -23,10 +23,7 @@ class BaseDao
             echo "Connection failed: " . $e->getMessage();
         }
     }
-
-    /**
-     * Method used to get all entities from database
-     */
+    
     public function get_all()
     {
         $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name);

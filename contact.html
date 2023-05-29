@@ -138,7 +138,8 @@
 					</div>
 				</div>
 				<div class="col-lg-9">
-					<form class="row contact_form" onsubmit="submitForm(event)" method="post" id="contactForm" novalidate="novalidate">
+					<form class="row contact_form" 
+					id="contactForm" novalidate="novalidate">
 						<div class="col-md-6">
 							<div class="form-group">
 								<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'">
@@ -156,23 +157,14 @@
 							</div>
 						</div>
 						<div class="col-md-12 text-right">
-							<button type="submit" value="submit" class="primary-btn" style="background-color: FF7C00; color : white"><a href = "contact.html">Submit</a></button>
+							<button type="submit" value="submit" class="primary-btn" style="background-color: FF7C00; color : white">Submit</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</section>
-	<script>
-		function submitForm(event) {
-		  event.preventDefault();
-		  var form = document.querySelector('form');
-		  var formData = new FormData(form);
-		  var xhr = new XMLHttpRequest();
-		  xhr.open('POST', 'contact_process.php', true);
-		  xhr.send(formData);
-		}
-	  </script>
+	
 	<script>
 		function initMap() {
     var map = new google.maps.Map(document.getElementById('mapBox'), {
@@ -188,6 +180,48 @@
     });
   }
   
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script >
+		$(document).ready(function() {
+  // Form submit event handler
+  $('#contactForm').submit(function(e) {
+    e.preventDefault(); // Prevent form from submitting normally
+    
+    // Get form values
+    var fullName = $('#name').val();
+    var email = $('#email').val();
+    var subject = $('#subject').val();
+    var message = $('#message').val();
+    
+    // AJAX request
+    $.ajax({
+      url: 'contact.php', // Replace with the path to your PHP script
+      method: 'POST',
+      data: {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+      },
+      success: function(response) {
+        // Email sent successfully
+        alert('Email sent successfully');
+        // Reset form fields
+        $('#name').val('');
+        $('#email').val('');
+        $('#subject').val('');
+        $('#message').val('');
+      },
+      error: function(xhr, status, error) {
+        // Error sending email
+        console.error('Error sending email:', error);
+      }
+    });
+  });
+});
+
+		
 	</script>
 	<!--================Contact Area =================-->
 
@@ -262,7 +296,7 @@
 			</div>
 			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
 				<p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="https://buzzfeed.com" target="_blank">All rights reserved | SneakerShop</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 </p>
 			</div>

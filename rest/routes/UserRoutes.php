@@ -16,12 +16,13 @@ Flight::route("DELETE /users/@id", function($id){
     Flight::json(['message' => "user deleted successfully"]);
 });
 
-Flight::route("POST /user", function(){
+Flight::route("POST /use", function(){
+    $user = Flight::get('user');
     $request = Flight::request()->data->getData();
-    Flight::json(['message' => "user added successfully",
-        'data' => Flight::user_service()->add($request)
-    ]);
-});
+    Flight::json(['message' => "User added successfully",
+                  'data' => Flight::user_service()->add($request, $user)
+                 ]);
+ });
 
 Flight::route("PUT /user/@id", function($id){
     $user = Flight::request()->data->getData();
