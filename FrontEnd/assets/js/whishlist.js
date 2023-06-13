@@ -25,7 +25,7 @@ $(document).ready(() => {
                             <h5>${item.price}</h5>
                         </td>
                         <td>
-                            <button class="conformbutton" data-id="${item.id}">Remove From WishList</button>
+                            <button class="confirmbutton" data-id="${item.id}">Remove From WishList</button>
                         </td>
                     </tr>
                 `;
@@ -33,7 +33,7 @@ $(document).ready(() => {
             });
 
             // Delete button click event
-            $('.conformbutton').on('click', function () {
+            $('.confirmbutton').on('click', function () {
                 var itemId = $(this).data('id');
 
                 // Show confirmation prompt using SweetAlert

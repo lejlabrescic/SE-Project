@@ -5,9 +5,9 @@ $(document).ready(() => {
         var email = $("#email").val();
         var password = $("#password").val();
         var user = $("#user").val();
-        var conformpassword = $("#conformpassword").val();
-        if (name != '' && email != '' && password != '' && conformpassword != '') {
-            if (password != conformpassword) {
+        var confirmpassword = $("#confirmpassword").val();
+        if (name != '' && email != '' && password != '' && confirmpassword != '') {
+            if (password != confirmpassword) {
                 Swal.fire({
                     icon: 'error',
                     text: 'Please match the password and confirm password.',
@@ -22,7 +22,7 @@ $(document).ready(() => {
                         username: name,
                         email: email,
                         password: password,
-                        conformpassword: conformpassword,
+                        confirmpassword: confirmpassword,
                         user:user
                     },
                     success: function (response) {
