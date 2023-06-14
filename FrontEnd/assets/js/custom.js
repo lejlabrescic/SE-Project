@@ -87,9 +87,9 @@ $(document).ready(() => {
                           timer: 2000
                       }).then(() => {
                           if (data.role === 'admin') {
-                              window.location.href = "./admin/pages/home/home.html";
+                              window.location.href = "./frontend/admin/pages/home/home.html";
                           } else {
-                              window.location.href = "./modules/pages/home.html";
+                              window.location.href = "./frontend/modules/pages/home.html";
                           }
                       });
                   } else {
