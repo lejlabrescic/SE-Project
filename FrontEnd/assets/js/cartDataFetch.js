@@ -25,7 +25,7 @@ $(document).ready(() => {
                             <h5>${item.price}</h5>
                         </td>
                         <td>
-                            <button class="confirmbutton" data-id="${item.id}" data-product-name="${item.productName}" data-image="${item.image}" data-price="${item.price}">Purchase Now</button>
+                            <button class="conformbutton" data-id="${item.id}" data-product-name="${item.productName}" data-image="${item.image}" data-price="${item.price}">Purchase Now</button>
                         </td>
                         <td>
                             <button class="btn btn-danger" data-id="${item.id}">Delete</button>
@@ -54,7 +54,7 @@ $(document).ready(() => {
             });
 
             // Purchase button click event
-            $('.confirmbutton').on('click', function () {
+            $('.conformbutton').on('click', function () {
                 var productId = $(this).data('product-id');
                 var productName = $(this).data('product-name');
                 var image = $(this).data('image');

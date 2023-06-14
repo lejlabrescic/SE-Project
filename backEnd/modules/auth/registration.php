@@ -1,13 +1,13 @@
 <?php
-function registerUser($username, $email, $password, $confirmpassword, $user)
+function registerUser($username, $email, $password, $conformpassword, $user)
 {
     // Validate the form data
-    if (empty($username) || empty($email) || empty($password) || empty($confirmpassword) || empty($user)) {
+    if (empty($username) || empty($email) || empty($password) || empty($conformpassword) || empty($user)) {
         // Handle validation error
         echo json_encode(array("success" => false, "message" => "Please fill in all the fields."));
         return;
     }
-    if ($password !== $confirmpassword) {
+    if ($password !== $conformpassword) {
         echo json_encode(array("success" => false, "message" => "Please match the password and confirm password."));
         return;
     }

@@ -14,9 +14,9 @@ Flight::route('POST /register', function(){
     $username = Flight::request()->data['username'];
     $email = Flight::request()->data['email'];
     $password = Flight::request()->data['password'];
-    $confirmpassword = Flight::request()->data['confirmpassword'];
+    $conformpassword = Flight::request()->data['conformpassword'];
     $user = Flight::request()->data['user'];
-    registerUser($username, $email, $password,$confirmpassword,$user);
+    registerUser($username, $email, $password,$conformpassword,$user);
 });
 
 Flight::route('POST /login',function(){
