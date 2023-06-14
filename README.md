@@ -21,7 +21,7 @@ To run our application, download the source code. After that, in your terminal, 
 
 The application is deployed using Digital Ocean platfom. Click on the link below to visit it.
 
-- 🟢
+- 🟢https://starfish-app-fd6z8.ondigitalocean.app/ 
 
 ## Testing
 
