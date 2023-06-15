@@ -14,12 +14,11 @@ function registerUser($username, $email, $password, $conformpassword, $user)
 
     // Perform database check
     $db = getDatabaseConnection();
-    $checkStmt = $db->prepare("SELECT COUNT(*) FROM `registration` WHERE `email` = ?");
-    $checkStmt->bind_param("s", $email);
+    $checkStmt = $db->prepare("SELECT COUNT(*) FROM `registration` WHERE `email` = :email");
+    $checkStmt->bindParam(":email", $email);
     $checkStmt->execute();
-    $checkStmt->bind_result($count);
-    $checkStmt->fetch();
-    $checkStmt->close();
+    $count = $checkStmt->fetchColumn();
+    $checkStmt->closeCursor();
 
     if ($count > 0) {
         // Email already exists
@@ -31,9 +30,11 @@ function registerUser($username, $email, $password, $conformpassword, $user)
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Perform database insertion
-    $insertStmt = $db->prepare("INSERT INTO `registration`(`fullName`, `email`, `password`,`role`) VALUES (?, ?, ?, ?)");
-    $insertStmt->bind_param("ssss", $username, $email, $hashedPassword, $user);
-
+    $insertStmt = $db->prepare("INSERT INTO `registration`(`fullName`, `email`, `password`, `role`) VALUES (:fullName, :email, :password, :role)");
+    $insertStmt->bindParam(':fullName', $username);
+    $insertStmt->bindParam(':email', $email);
+    $insertStmt->bindParam(':password', $hashedPassword);
+    $insertStmt->bindParam(':role', $user);
     if ($insertStmt->execute()) {
         // Registration successful
         echo json_encode(array("success" => true, "message" => "Registration successful. Welcome, $username!"));
@@ -42,7 +43,8 @@ function registerUser($username, $email, $password, $conformpassword, $user)
         echo json_encode(array("success" => false, "message" => "Registration failed. Please try again later."));
     }
 
-    $insertStmt->close();
-    $db->close();
+    $insertStmt->closeCursor();
+    $db = null;
 }
+
 ?>

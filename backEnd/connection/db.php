@@ -1,21 +1,23 @@
 <?php
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 if (!function_exists('getDatabaseConnection')) {
 function getDatabaseConnection() {
-    $host = 'localhost';
-    $username = 'root';
-    $password = '';
-    $database = 'project';
+    $servername = getenv('SERVERNAME');
+    $username = getenv('USERNAME');
+    $password = getenv('PASSWORD');
+    $schema = getenv('SCHEMA'); 
+    $port = "25060";
+    $path = getenv('DRIVE');
+    $options = array(
+        PDO::MYSQL_ATTR_SSL_CA => $path,
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
 
-    $db = new mysqli($host, $username, $password, $database);
+    );
+    $conn = new PDO("mysql:host=$servername; port=$port; dbname=$schema", $username, $password, $options);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Check the connection
-    if ($db->connect_errno) {
-        die("Failed to connect to MySQL: " . $db->connect_error);
-    }
-
-    // Optional: Set the character set
-    $db->set_charset("utf8");
-
-    return $db;
+    return $conn;
 }
 }
+    

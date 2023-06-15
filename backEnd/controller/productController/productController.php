@@ -1,5 +1,6 @@
 <?php
 require __DIR__.'/../../models/productModel/productModel.php';
+
 class ProductController {
     public static function uploadByAdmin() {
         $productName = Flight::request()->data->productName;
@@ -8,6 +9,7 @@ class ProductController {
         $response = productModel::uploadProduct($productName, $image, $price);
         Flight::json($response);
     }
+    
     public function updateProduct() {
         $productId = Flight::request()->data->id;
         $field = Flight::request()->data->field;
@@ -23,6 +25,7 @@ class ProductController {
             Flight::json(array("success" => false, "message" => $result['message']));
         }
     }
+    
     public function deleteProduct($id) {
         $model = new ProductModel();
         $result = $model->deleteProduct($id);
@@ -33,6 +36,4 @@ class ProductController {
             Flight::json(array("success" => false, "message" => "Failed to delete product."));
         }
     }
-    
-
 }

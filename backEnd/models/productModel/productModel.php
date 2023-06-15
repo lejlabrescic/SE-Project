@@ -19,9 +19,11 @@ class ProductModel {
         }
         $conn = getDatabaseConnection();
         try {
-            $sql = "INSERT INTO `productdetails`(`productName`, `image`, `price`) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO `productdetails`(`productName`, `image`, `price`) VALUES (:productName, :image, :price)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sss', $productName, $fileName, $price);
+            $stmt->bindParam(':productName', $productName);
+            $stmt->bindParam(':image', $image); 
+            $stmt->bindParam(':price', $price); 
             if ($stmt->execute()) {
                 return array('success' => true, 'message' => 'Product uploaded successfully.');
             } else {
@@ -67,9 +69,10 @@ class ProductModel {
                     // Move the uploaded file to the target directory
                     if (move_uploaded_file($file['tmp_name'], $targetFile)) {
                         // File uploaded successfully, update the image field in the database
-                        $sql = "UPDATE `productdetails` SET `$field` = ? WHERE `id` = ?";
+                        $sql = "UPDATE `productdetails` SET `$field` = :field WHERE `id` = :id";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("si", $filename, $productId);
+                        $stmt->bindParam(':field', $filename);
+                        $stmt->bindParam(':id', $productId); 
                         $stmt->execute();
     
                         if ($stmt->affected_rows > 0) {
@@ -85,9 +88,10 @@ class ProductModel {
                 }
             } else {
                 // Handle other fields
-                $sql = "UPDATE `productdetails` SET `$field` = ? WHERE `id` = ?";
+                $sql = "UPDATE `productdetails` SET `$field` = :value WHERE `id` = :id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("si", $value, $productId);
+                $stmt->bindParam(":value", $value);
+                $stmt->bindParam(':id', $id); 
                 $stmt->execute();
     
                 if ($stmt->affected_rows > 0) {
@@ -104,8 +108,8 @@ class ProductModel {
     }
     public function deleteProduct($id) {
         $conn = getDatabaseConnection();
-        $stmt = $conn->prepare("DELETE FROM `productdetails` WHERE id = ?");
-        $stmt->bind_param("i", $id);
+        $stmt = $conn->prepare("DELETE FROM `productdetails` WHERE id = :id");
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
         
         return $stmt->affected_rows > 0;
