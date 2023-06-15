@@ -6,9 +6,13 @@ class WhishListModel {
         }
 
         $conn = getDatabaseConnection();
-        $sql = "INSERT INTO `wishlist` (`productId`, `userId`, `productName`, `image`, `price`) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO `wishlist` (`productId`, `userId`, `productName`, `image`, `price`) VALUES (:productId, :userId, :productName, :image, :price)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('iisss', $productId, $userId, $productName, $image, $price);
+        $stmt->bindParam(':productId', $productId);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':productName', $productName);
+        $stmt->bindParam(':image', $image);
+        $stmt->bindParam(':price', $price);
 
         if ($stmt->execute()) {
             return array('success' => true, 'message' => 'Product uploaded successfully.');
@@ -21,15 +25,15 @@ class WhishListModel {
         $conn = getDatabaseConnection();
         $uId = Flight::request()->query['userId'];
 
-        $sql = "SELECT * FROM `wishlist` WHERE `userId` = ?";
+        $sql = "SELECT * FROM `wishlist` WHERE `userId` = :uId";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $uId);
+        $stmt->bindParam(':uId', $uId);
 
         if ($stmt->execute()) {
-            $result = $stmt->get_result();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $data = array();
 
-            while ($row = $result->fetch_assoc()) {
+            foreach ($result as $row) {
                 $data[] = array(
                     'id' => $row['id'],
                     'pId' => $row['productName'],
@@ -49,9 +53,9 @@ class WhishListModel {
     public static function deleteWhisListItemForDb($cartItemId) {
         $conn = getDatabaseConnection();
 
-        $sql = "DELETE FROM `wishlist` WHERE `id` = ?";
+        $sql = "DELETE FROM `wishlist` WHERE `id` = :id";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $cartItemId);
+        $stmt->bindParam(':id', $cartItemId);
 
         if ($stmt->execute()) {
             return array('success' => true, 'message' => 'Cart item deleted successfully.');
@@ -60,4 +64,5 @@ class WhishListModel {
         }
     }
 }
+
 ?>

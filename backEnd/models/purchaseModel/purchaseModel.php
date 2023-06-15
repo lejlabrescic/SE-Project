@@ -6,7 +6,7 @@ class purchaseModel {
         
         $sql = "INSERT INTO `purchase` ( `productName`, `image`, `price`) VALUES ( ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sss', $productName, $image, $price);
+        $stmt->bindParam('sss', $productName, $image, $price);
         
         if ($stmt->execute()) {
             return array('success' => true, 'message' => 'Purchase successful.');

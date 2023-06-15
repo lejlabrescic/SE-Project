@@ -11,22 +11,19 @@ function loginUser($email, $password) {
 
     // Check if the user exists in the database
     $db = getDatabaseConnection();
-    $stmt = $db->prepare("SELECT * FROM `registration` WHERE `email` = ?");
-    $stmt->bind_param("s", $email);
+    $stmt = $db->prepare("SELECT * FROM `registration` WHERE `email` = :email");
+    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
     $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        // User found, verify the password
-        $row = $result->fetch_assoc();
-        $hashedPassword = $row['password'];
-
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $hashedPassword = $result['password'];
+    $rowCount = $stmt->rowCount();
+    if ($rowCount === 1) {
         if (password_verify($password, $hashedPassword)) {
             // Password is correct, login successful
-            $_SESSION['user_id'] = $row['id']; // Store user ID in the session variable
+            $_SESSION['user_id'] = $result['id']; // Store user ID in the session variable
 
             // Return the user ID in the response
-            echo json_encode(array("success" => true, "message" => "Login successful. Welcome, " . $row['fullName'] . "!", "userId" => $row['id'], "role"=>$row['role']));
+            echo json_encode(array("success" => true, "message" => "Login successful. Welcome, " . $result['fullName'] . "!", "userId" => $result['id'], "role" => $result['role']));
         } else {
             // Password is incorrect
             echo json_encode(array("success" => false, "message" => "Incorrect password. Please try again."));
@@ -36,7 +33,6 @@ function loginUser($email, $password) {
         echo json_encode(array("success" => false, "message" => "User not found. Please check your email."));
     }
 
-    $stmt->close();
-}
+    $stmt->closeCursor();
 
-?>
+}

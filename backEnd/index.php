@@ -29,10 +29,10 @@ Flight::route('GET /products', function() {
     $db = getDatabaseConnection();
     $stmt = $db->prepare("SELECT * FROM `productdetails`");
     $stmt->execute();
-    $result = $stmt->get_result();
-    $products = $result->fetch_all(MYSQLI_ASSOC);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     Flight::json($products);
 });
+
 Flight::route('POST /updateProduct', function(){
     $controller = new ProductController();
     $controller->updateProduct();
@@ -60,7 +60,7 @@ Flight::route('POST /product/chart/upload/wishlist',function(){
     uploadToWhislist::UploadToWhislistItem();
 });
 Flight::route('GET /fetchwishlistData', function() {
-    uploadToWhislist::fetchDataFromwislist();
+    uploadToWhislist::FetchDataFromWhislist();
 });
 Flight::route('POST /deletewhislistItem', function() {
     uploadToWhislist::deleteWhislistItem();

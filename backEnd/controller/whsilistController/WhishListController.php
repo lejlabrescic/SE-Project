@@ -12,15 +12,16 @@ class uploadToWhislist {
         Flight::json($response);
     }
 
-    public static function fetchDataFromwislist() {
+    public static function FetchDataFromWhislist() {
         $cartData = WhishListModel::fetchCardForSpecificUser();
         Flight::json($cartData);
     }
 
-    public static function deleteWhislistItem() {
+    public static function DeleteWhislistItem() {
         $itemId = Flight::request()->data->itemId;
         $response = WhishListModel::deleteWhisListItemForDb($itemId);
         Flight::json($response);
     }
 }
+
 ?>
