@@ -33,8 +33,7 @@ class ProductModel {
             return array('success' => false, 'message' => 'Error: ' . $e->getMessage());
         }
     }
-    public function updateProduct($productId, $field, $value, $file = null)
-    {
+    public function updateProduct($productId, $field, $value, $file = null){
         $conn = getDatabaseConnection();
     
         try {

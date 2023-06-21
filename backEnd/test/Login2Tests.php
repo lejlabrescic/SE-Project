@@ -2,17 +2,13 @@
 //require '../modules/auth/login.php';
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase; 
-class LoginTest extends TestCase
-{
-    public function testLoginSuccess()
-    {
+class LoginTest extends TestCase{
+    public function testLoginSuccess(){
         $dbMock = $this->getMockBuilder(PDO::class)
             ->disableOriginalConstructor()
             ->getMock();
-        
         $stmtMock = $this->getMockBuilder(PDOStatement::class)
             ->getMock();
-        
         $fetchResult = array(
             'id' => 1,
             'fullName' => 'test',
@@ -61,8 +57,7 @@ class LoginTest extends TestCase
         $this->assertEquals($expectedOutput, $output);
     }
     
-    public function testLoginFailure()
-    {
+    public function testLoginFailure(){
         $dbMock = $this->getMockBuilder(PDO::class)
             ->disableOriginalConstructor()
             ->getMock();

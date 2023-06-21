@@ -1,6 +1,5 @@
 <?php
-function registerUser($username, $email, $password, $conformpassword, $user)
-{
+function registerUser($username, $email, $password, $conformpassword, $user){
     // Validate the form data
     if (empty($username) || empty($email) || empty($password) || empty($conformpassword) || empty($user)) {
         // Handle validation error
