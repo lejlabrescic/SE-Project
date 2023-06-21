@@ -8,17 +8,20 @@ class uploadToCart {
         $productName = Flight::request()->data->productName;
         $image = Flight::request()->data->image;
         $price = Flight::request()->data->price;
-        $response = cartModel::uploadToCartProduct($productId, $userId, $productName, $image, $price);
+        $cartModel = cartModel::getInstance();
+        $response = $cartModel->uploadToCartProduct($productId, $userId, $productName, $image, $price);
     }
 
     public static function FetchDataFromCart() {
-        $cartData = cartModel::fetchCardForSpecificUser();
+        $cartModel = cartModel::getInstance();
+        $cartData = $cartModel->fetchCardForSpecificUser();
         Flight::json($cartData);
     }
 
     public static function DeleteCartItem() {
         $itemId = Flight::request()->data->itemId;
-        $response = cartModel::deleteCartItem($itemId);
+        $cartModel = cartModel::getInstance();
+        $response = $cartModel->deleteCartItem($itemId);
         Flight::json($response);
     }
 }
