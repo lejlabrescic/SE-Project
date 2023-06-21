@@ -19,15 +19,16 @@ To run our application, download the source code. After that, in your terminal, 
 
 ## Deployment 
 
-The application is deployed using Digital Ocean platfom. Click on the link below to visit it.
+The application and database are deployed and hosted using Digital Ocean platfom. Click on the link below to visit it.
 
 - 🟢https://starfish-app-fd6z8.ondigitalocean.app/ 
 
 ## Testing
 
-The application tests can be found on the /test folder. Tests were done using PHPUnit and Selenium for PHP. To run the tests, run the php code of the test that you're interested in. 
-
-
+The application tests can be found on the backend/test folder. Tests were done using PHPUnit. To run the tests, run the php code of the test that you're interested in, in the following way: 
+```bash
+  phpunit nameOfTheTest.php
+```
 
 ## 🚀 About Authors
 If you have any questions, do not hesitate to ask us. You can reach us using the links provided below. Kudos!👋
