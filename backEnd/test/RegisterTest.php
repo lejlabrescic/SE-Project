@@ -2,10 +2,8 @@
 require '../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
 
-class RegistrationTest extends TestCase
-{
-    public function testRegisterUser()
-    {
+class RegistrationTest extends TestCase{
+    public function testRegisterUser(){
         $mockDb = $this->getMockBuilder(PDO::class)
             ->disableOriginalConstructor()
             ->getMock();
