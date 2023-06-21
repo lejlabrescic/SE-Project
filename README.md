@@ -5,7 +5,7 @@
 
 This project was made for the CEN 308 Software Engineering course on the International Burch University. The sneaker shop was made using HTML, CSS and jQuery on the frontend and FlightPHP and MySQL database on the backend. 
 
-The detailed documentation can be found on the following [link](https://github.com/lejlabrescic/SE-Project/blob/main/documentation/Sneaker%20Shop%20Documentation.docx). 
+The detailed documentation can be found on the following [link](https://github.com/lejlabrescic/SE-Project/blob/main/documentation/Sneaker%20Shop%20Documentation%20-%20updated.docx). 
 
 Application provides insight into the latest sneaker trends. It has a responsive design and it is accessible from every device.
 
