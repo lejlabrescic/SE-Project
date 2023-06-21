@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . '/../../connection/db.php';
+require_once 'Product.php';
+require_once 'ProductBuilder.php';
 
 class ProductModel {
     public static function uploadProduct($productName, $image, $price) {
@@ -17,11 +19,24 @@ class ProductModel {
         if (!move_uploaded_file($image['tmp_name'], $destination)) {
             return array('success' => false, 'message' => 'Failed to upload the file.');
         }
+
+        $builder = new ProductBuilder();
+        $product = $builder
+            ->setName($productName)
+            ->setPrice($price)
+            ->setImage($fileName)
+            ->build();
+
         $conn = getDatabaseConnection();
         try {
+            $name = $product->getName();
+            $image = $product->getImage();
+            $price = $product->getPrice();
+
             $sql = "INSERT INTO `productdetails`(`productName`, `image`, `price`) VALUES (:productName, :image, :price)";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':productName', $productName);
+
+            $stmt->bindParam(':productName', $name);
             $stmt->bindParam(':image', $image); 
             $stmt->bindParam(':price', $price); 
             if ($stmt->execute()) {
@@ -73,8 +88,11 @@ class ProductModel {
                         $stmt->bindParam(':field', $filename);
                         $stmt->bindParam(':id', $productId); 
                         $stmt->execute();
-    
-                        if ($stmt->affected_rows > 0) {
+
+                        $rowCount = $stmt->rowCount();
+                        
+                        if ($rowCount > 0) {    
+                        
                             // Update successful
                             return array('success' => true, 'message' => 'Product image updated successfully.');
                         } else {
@@ -92,8 +110,10 @@ class ProductModel {
                 $stmt->bindParam(":value", $value);
                 $stmt->bindParam(':id', $id); 
                 $stmt->execute();
-    
-                if ($stmt->affected_rows > 0) {
+                $rowCount = $stmt->rowCount();
+                        
+                if ($rowCount > 0) {    
+                        
                     // Update successful
                     return array('success' => true, 'message' => 'Product field updated successfully.');
                 } else {
@@ -110,8 +130,9 @@ class ProductModel {
         $stmt = $conn->prepare("DELETE FROM `productdetails` WHERE id = :id");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        
-        return $stmt->affected_rows > 0;
+        $rowCount = $stmt->rowCount();
+                        
+        return $stmt->$rowCount > 0;
     }
     
     

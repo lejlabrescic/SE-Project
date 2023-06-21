@@ -2,6 +2,21 @@
 require __DIR__ . '/../../connection/db.php';
 
 class cartModel {
+
+    private static $instance;
+    private $conn;
+
+    private function __construct() {
+        $this->conn = getDatabaseConnection();
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new cartModel();
+        }
+        return self::$instance;
+    }
+    
     public static function uploadToCartProduct($productId, $userId, $productName, $image, $price) {
         if (empty($productId) || empty($userId) || empty($productName) || empty($image) || empty($price)) {
             return array('success' => false, 'message' => 'Please provide all required fields.');
